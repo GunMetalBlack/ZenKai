@@ -2,6 +2,7 @@ import tcod
 
 from engine import Engine
 from entity import Entity
+from game_map import GameMap
 from input_handlers import EventHandler
 
 #Default values
@@ -9,6 +10,8 @@ def main() -> None:
     screen_width = 80
     screen_height = 50
     
+    map_width = 80
+    map_height = 45
     #sets the tileset resource
     tileset = tcod.tileset.load_tilesheet(
         "dejavu10x10_gs_tc.png", 32, 8, tcod.tileset.CHARMAP_TCOD
@@ -18,7 +21,9 @@ def main() -> None:
     npc = Entity(int(screen_width / 2 - 5), int(screen_height / 2), "@", (255, 255, 0))
     entities = {npc, player}
     
-    engine = Engine(entities=entities, event_handler=event_handler, player=player)
+    game_map = GameMap(map_width, map_height)
+    
+    engine = Engine(entities=entities, event_handler=event_handler, game_map=game_map, player=player)
      
     #Creates a new Screen with the given tile set and width and height
     with tcod.context.new_terminal(
